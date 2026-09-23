@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# archai 실행기 — 전용 가상환경(~/.cache/arch-ai/venv)을 자동으로 만들고 archai 모듈을 실행한다.
+#   bin/archai law search 건축법
+#   bin/archai mcp            # MCP 서버 (stdio)
+#   bin/archai setup          # 가상환경만 준비 (SessionStart 훅에서 호출)
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+VENV="${ARCHAI_VENV:-$HOME/.cache/arch-ai/venv}"
+STAMP="$VENV/.requirements.sha"
+REQ_SHA="$(sha256sum "$ROOT/requirements.txt" | cut -d' ' -f1)"
+if [ ! -x "$VENV/bin/python" ] || [ "$(cat "$STAMP" 2>/dev/null)" != "$REQ_SHA" ]; then
+  python3 -m venv "$VENV" >&2
+  "$VENV/bin/pip" install -q --disable-pip-version-check -r "$ROOT/requirements.txt" >&2
+  echo "$REQ_SHA" > "$STAMP"
+fi
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
+cmd="${1:-}"; shift || true
+case "$cmd" in
+  setup)                   echo "arch-ai: environment ready ($VENV)" ;;
+  mcp)                     exec "$VENV/bin/python" -m archai.mcp_server "$@" ;;
+  law|structure|bom|spec)  exec "$VENV/bin/python" -m "archai.$cmd" "$@" ;;
+  dxf)                     exec "$VENV/bin/python" -m archai.dxf_tools "$@" ;;
+  ifc)                     exec "$VENV/bin/python" -m archai.ifc_tools "$@" ;;
+  *) echo "usage: archai {setup|mcp|law|dxf|ifc|structure|bom|spec} ..." >&2; exit 2 ;;
+esac

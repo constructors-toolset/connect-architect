@@ -23,6 +23,7 @@ AI가 만드는 모든 산출물은 아래 폴더 중 하나에 저장합니다.
 | 스크립트 / 유틸리티 코드 | `tools/scripts/` |
 | 프롬프트 템플릿 | `tools/prompts/` |
 | AI 에이전트 / 자동화 워크플로 정의 | `tools/agents/` |
+| **공통 스킬·도구·MCP (모든 서브 프로젝트 공용)** | `tools/claude-plugin/arch-ai/` |
 
 어디에 넣을지 애매하면 위 표에서 가장 가까운 곳을 고르고, 커밋 메시지에 이유를 적습니다. 새 하위 폴더가 필요하면 해당 폴더의 `README.md`에 설명을 추가합니다.
 
@@ -57,7 +58,16 @@ AI가 만든 **도구**(`tools/`)는 파일 상단 주석에 목적·사용법�
 - 새 보고서를 만들거나 갱신하면 **반드시** `report/README.md`의 프로젝트 목록 표를 함께 갱신합니다 (상태, 최종 갱신일).
 - 기존 보고서는 덮어쓰지 않고 "변경 이력" 섹션에 날짜별로 누적합니다.
 
-## 5. 금지 사항
+## 5. 건축 전문 스킬 (공통 플러그인 arch-ai)
+
+- 모든 서브 프로젝트가 같이 쓰는 스킬·도구·MCP 서버는 **이 저장소의 `tools/claude-plugin/arch-ai/`에서만** 만들고 고친다.
+  서브 프로젝트에 복사하지 않는다. (배포 방법: `docs/guides/arch-ai-plugin.md`)
+- 건축 관련 작업(도면, 법규, 구조, BIM, 시방서, BOM)은 `arch-expert-team` 스킬에서 시작해 분야별 스킬 절차를 따른다.
+- 새 공통 스킬은 `tools/claude-plugin/arch-ai/skills/<이름>/SKILL.md`, 새 도구는 `archai/` 모듈 + `mcp_server.py` 등록 + 플러그인 README 표 갱신.
+- 도구·스킬을 바꾸면 `plugin.json`과 `.claude-plugin/marketplace.json`의 `version`을 함께 올린다.
+- 법령·기준 수치는 스킬 문서에 고정하지 않는다. 도구로 현행 원문을 조회하도록 한다.
+
+## 6. 금지 사항
 
 - `data/raw/`의 원본 파일 수정 금지 (가공 결과는 `data/processed/`로).
 - 대용량 파일(> 50MB)은 커밋하지 않습니다. `data/` 안에 위치·다운로드 방법만 문서화합니다.

@@ -23,7 +23,8 @@
 └── tools/
     ├── scripts/       # 스크립트·유틸리티
     ├── prompts/       # 프롬프트 템플릿
-    └── agents/        # AI 에이전트·워크플로
+    ├── agents/        # AI 에이전트·워크플로
+    └── claude-plugin/arch-ai/  # 공통 건축 전문 스킬 + MCP 서버 (서브 프로젝트 공용)
 ```
 
 ## 시작하기
@@ -31,3 +32,5 @@
 - 서브 프로젝트 현황 → [`report/README.md`](report/README.md)
 - 새 서브 프로젝트 보고서 → [`report/_template.md`](report/_template.md)를 복사
 - AI와 작업할 때의 규칙 → [`CLAUDE.md`](CLAUDE.md)
+- 건축 전문 스킬·도구(arch-ai 플러그인) → [`tools/claude-plugin/arch-ai/README.md`](tools/claude-plugin/arch-ai/README.md)
+- 서브 프로젝트에서 공통 스킬 쓰기 → [`docs/guides/arch-ai-plugin.md`](docs/guides/arch-ai-plugin.md)
