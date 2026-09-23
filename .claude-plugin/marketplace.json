@@ -1,6 +1,6 @@
 {
   "name": "connect-architect",
-  "owner": { "name": "lonycell" },
+  "owner": { "name": "constructors-toolset" },
   "metadata": {
     "description": "건축 AI 통합 레포지토리의 공통 스킬·도구·MCP 서버"
   },

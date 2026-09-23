@@ -21,7 +21,7 @@ Claude Code로 그 저장소를 열면 마켓플레이스 등록과 플러그인
 {
   "extraKnownMarketplaces": {
     "connect-architect": {
-      "source": { "source": "github", "repo": "lonycell/connect-architect" }
+      "source": { "source": "github", "repo": "constructors-toolset/connect-architect" }
     }
   },
   "enabledPlugins": {
@@ -37,7 +37,7 @@ Claude Code로 그 저장소를 열면 마켓플레이스 등록과 플러그인
 
 Claude Code에서:
 ```
-/plugin marketplace add lonycell/connect-architect
+/plugin marketplace add constructors-toolset/connect-architect
 /plugin install arch-ai@connect-architect
 ```
 
@@ -65,7 +65,7 @@ claude mcp add docling -- <허브 저장소>/tools/claude-plugin/arch-ai/bin/arc
 
 ```markdown
 ## 건축 전문 스킬
-이 프로젝트는 허브 저장소(lonycell/connect-architect)의 arch-ai 플러그인을 사용한다.
+이 프로젝트는 허브 저장소(constructors-toolset/connect-architect)의 arch-ai 플러그인을 사용한다.
 건축 관련 작업은 arch-expert-team 스킬에서 시작하고, 분야별 스킬(arch-drawing-read, arch-drawing-draft,
 arch-building-code, arch-structural-review, arch-bim-ifc, arch-specification, arch-bom-cost)의 절차를 따른다.
 진행 상황은 허브 저장소 report/<이 프로젝트>.md 에 보고한다.
