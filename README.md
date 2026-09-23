@@ -8,7 +8,7 @@
 ```
 .
 ├── CLAUDE.md          # AI 작업 규칙 (산출물 저장 위치, 명명 규칙)
-├── report/            # 서브 프로젝트별 보고서 + 전체 현황 인덱스
+├── repo/              # 서브 프로젝트 저장소 (git 서브모듈) + 목록·진행 기록
 ├── docs/
 │   ├── research/      # 조사·리서치
 │   ├── design/        # 설계 문서
@@ -29,8 +29,8 @@
 
 ## 시작하기
 
-- 서브 프로젝트 현황 → [`report/README.md`](report/README.md)
-- 새 서브 프로젝트 보고서 → [`report/_template.md`](report/_template.md)를 복사
+- 서브 프로젝트 목록·연결 방법 → [`repo/README.md`](repo/README.md)
+- 받기: `git clone --recurse-submodules https://github.com/constructors-toolset/connect-architect.git`
 - AI와 작업할 때의 규칙 → [`CLAUDE.md`](CLAUDE.md)
 - 건축 전문 스킬·도구(arch-ai 플러그인) → [`tools/claude-plugin/arch-ai/README.md`](tools/claude-plugin/arch-ai/README.md)
 - 서브 프로젝트에서 공통 스킬 쓰기 → [`docs/guides/arch-ai-plugin.md`](docs/guides/arch-ai-plugin.md)
