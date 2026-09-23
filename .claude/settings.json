@@ -1,0 +1,10 @@
+{
+  "extraKnownMarketplaces": {
+    "connect-architect": {
+      "source": { "source": "directory", "path": "." }
+    }
+  },
+  "enabledPlugins": {
+    "arch-ai@connect-architect": true
+  }
+}

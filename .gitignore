@@ -1,1 +1,26 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Node
 node_modules/
+
+# Secrets
+.env
+*.key
+
+# Large data (document the location in data/README.md instead)
+*.zip
+*.tar.gz
+*.h5
+*.ckpt
+*.pt
+*.safetensors

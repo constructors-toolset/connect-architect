@@ -1,0 +1,8 @@
+{
+  "name": "arch-ai",
+  "version": "0.2.0",
+  "description": "건축 AI 전문가 스킬 모음: 도면 해석·작도, 건축법령 검토, 구조 검토, BIM(IFC), 시방서, BOM/물량·단가 + arch-ai MCP 서버",
+  "author": { "name": "lonycell" },
+  "repository": "https://github.com/lonycell/connect-architect",
+  "keywords": ["architecture", "building-code", "bim", "ifc", "dxf", "structural", "specification", "bom", "korea"]
+}

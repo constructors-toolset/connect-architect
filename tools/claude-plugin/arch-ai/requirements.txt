@@ -1,0 +1,5 @@
+# ifcopenshell-mcp(ifcmcp)가 mcp 1.x API를 쓰므로 1.x로 고정한다. archai.mcp_server는 1.x/2.x 모두 지원.
+mcp>=1.2,<2
+ezdxf>=1.3
+ifcopenshell>=0.8
+ifcopenshell-mcp>=0.8.5
