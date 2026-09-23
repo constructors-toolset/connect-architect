@@ -1,0 +1,3 @@
+[submodule "repo/spec-ai"]
+	path = repo/spec-ai
+	url = https://github.com/constructors-toolset/spec-ai.git
