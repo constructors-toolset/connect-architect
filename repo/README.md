@@ -28,6 +28,7 @@ git commit -m "Add <프로젝트-이름> sub-project"
 git clone --recurse-submodules https://github.com/constructors-toolset/connect-architect.git
 git submodule update --init --recursive     # 이미 받은 저장소에서 서브모듈 받기
 git submodule update --remote repo/<이름>    # 서브 프로젝트 최신 커밋으로 올리기 (그 뒤 허브에 커밋)
+tools/scripts/sync-subproject.sh <이름> [ref] # 푸시된 커밋으로 포인터 갱신 + 허브 커밋까지 한 번에
 ```
 
 ## 진행 기록
@@ -37,3 +38,4 @@ git submodule update --remote repo/<이름>    # 서브 프로젝트 최신 커�
 | 날짜 | 프로젝트 | 내용 |
 |---|---|---|
 | 2026-09-23 | spec-ai | 저장소 생성, 서브모듈 연결. 제품 비전·아키텍처 초안·작업 규칙 작성 (기획 단계) |
+| 2026-09-23 | spec-ai | 개발 대상 저장소로 지정. 다른 저장소는 참조만 하고, 허브 포인터는 spec-ai 커밋마다 `sync-subproject.sh`로 갱신 |
