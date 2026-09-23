@@ -68,7 +68,7 @@ claude mcp add docling -- <허브 저장소>/tools/claude-plugin/arch-ai/bin/arc
 이 프로젝트는 허브 저장소(constructors-toolset/connect-architect)의 arch-ai 플러그인을 사용한다.
 건축 관련 작업은 arch-expert-team 스킬에서 시작하고, 분야별 스킬(arch-drawing-read, arch-drawing-draft,
 arch-building-code, arch-structural-review, arch-bim-ifc, arch-specification, arch-bom-cost)의 절차를 따른다.
-진행 상황은 허브 저장소 report/<이 프로젝트>.md 에 보고한다.
+이 저장소는 허브 저장소의 repo/<이 프로젝트>/ 에 서브모듈로 연결되어 있다. 진행 상황은 허브 repo/README.md 에 기록한다.
 ```
 
 ## 6. 동작 확인

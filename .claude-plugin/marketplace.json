@@ -9,7 +9,7 @@
       "name": "arch-ai",
       "source": "./tools/claude-plugin/arch-ai",
       "description": "건축 전문가 스킬(도면 해석·작도, 법규, 구조, BIM, 시방서, BOM) + arch-ai MCP 서버",
-      "version": "0.2.0"
+      "version": "0.2.1"
     }
   ]
 }

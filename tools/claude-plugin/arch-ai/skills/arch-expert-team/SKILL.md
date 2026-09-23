@@ -64,4 +64,4 @@ MCP가 없으면 CLI: `"${CLAUDE_PLUGIN_ROOT}/bin/archai" <law|dxf|ifc|structure
 
 작업 중인 저장소에 `CLAUDE.md` 저장 규칙이 있으면 그것을 따른다. 허브 저장소(connect-architect) 규칙:
 검토서·조사 → `docs/research/` 또는 `docs/design/`, AI 생성 데이터 → `data/generated/`(+`.meta.md`),
-서브 프로젝트 진행 → `report/<프로젝트>.md`.
+서브 프로젝트 진행 → 허브 `repo/README.md`의 목록·진행 기록.
