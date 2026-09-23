@@ -70,7 +70,7 @@ def _oc() -> str:
 def _get(endpoint: str, params: dict) -> dict:
     params = {"OC": _oc(), "type": "JSON", **params}
     url = f"{BASE}/{endpoint}?{urllib.parse.urlencode(params)}"
-    req = urllib.request.Request(url, headers={"User-Agent": "archai/0.1"})
+    req = urllib.request.Request(url, headers={"User-Agent": "archai/0.2", "Referer": "https://www.law.go.kr/"})
     for attempt in range(4):
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:

@@ -7,6 +7,11 @@
             "type": "command",
             "command": "\"${CLAUDE_PLUGIN_ROOT}/bin/archai\" setup",
             "timeout": 300
+          },
+          {
+            "type": "command",
+            "command": "command -v npx >/dev/null && npx -y --ignore-scripts --omit=optional korean-law-mcp@4 --version >/dev/null 2>&1 < /dev/null; true",
+            "timeout": 180
           }
         ]
       }

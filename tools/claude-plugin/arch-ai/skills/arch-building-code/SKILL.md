@@ -27,6 +27,10 @@ description: 대한민국 건축 관련 법령(건축법·시행령·시행규�
 
 환경변수 `LAW_OC`(국가법령정보센터 Open API 계정)가 필요하다. 없으면 사용자에게 open.law.go.kr 신청을 안내한다.
 
+**korean-law MCP(함께 설치, MIT)** 는 더 깊은 법률 조사에 쓴다: `search_law`, `get_law_text`, `get_annexes`(**별표·서식** — 용도분류 별표 1, 주차 별표 등),
+`ordinance_radar`(조례 비교), `search_decisions`/`get_decision_text`(판례·해석례), `legal_research`(법체계·위임관계 추적), 인용 검증.
+간단한 조문 확인은 arch-ai `law_article`, 별표·조례 비교·판례·위임관계는 korean-law 도구를 쓴다.
+
 ## 검토 절차
 
 1. **전제 조건 확정**: 대지 위치(시·군·구), 용도지역·지구, 대지면적, 도로 조건(폭·접도 길이), 건축물 용도(시행령 별표 1 분류), 규모(층수·연면적·높이).

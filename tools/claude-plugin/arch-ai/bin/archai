@@ -3,6 +3,8 @@
 #   bin/archai law search 건축법
 #   bin/archai mcp            # MCP 서버 (stdio)
 #   bin/archai setup          # 가상환경만 준비 (SessionStart 훅에서 호출)
+#   bin/archai ifcmcp         # IfcOpenShell 공식 MCP 서버 (같은 가상환경에 설치됨)
+#   bin/archai docling        # docling MCP (PDF 표·레이아웃 추출, 선택 설치: 약 6GB, uv 필요)
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VENV="${ARCHAI_VENV:-$HOME/.cache/arch-ai/venv}"
@@ -18,8 +20,13 @@ cmd="${1:-}"; shift || true
 case "$cmd" in
   setup)                   echo "arch-ai: environment ready ($VENV)" ;;
   mcp)                     exec "$VENV/bin/python" -m archai.mcp_server "$@" ;;
-  law|structure|bom|spec)  exec "$VENV/bin/python" -m "archai.$cmd" "$@" ;;
+  law|structure|bom|spec|kcsc|price) exec "$VENV/bin/python" -m "archai.$cmd" "$@" ;;
   dxf)                     exec "$VENV/bin/python" -m archai.dxf_tools "$@" ;;
   ifc)                     exec "$VENV/bin/python" -m archai.ifc_tools "$@" ;;
-  *) echo "usage: archai {setup|mcp|law|dxf|ifc|structure|bom|spec} ..." >&2; exit 2 ;;
+  ifcmcp)                  exec "$VENV/bin/ifcmcp" "$@" ;;   # IfcOpenShell 공식 MCP (ifcopenshell-mcp)
+  docling)
+    command -v uvx >/dev/null || { echo "docling에는 uv가 필요합니다: https://docs.astral.sh/uv/" >&2; exit 1; }
+    export DOCLING_MCP_CONVERSION_MODE="${DOCLING_MCP_CONVERSION_MODE:-local}"
+    exec uvx --from 'docling-mcp[local]' docling-mcp-server --transport stdio "$@" ;;
+  *) echo "usage: archai {setup|mcp|ifcmcp|docling|law|dxf|ifc|structure|bom|spec|kcsc|price} ..." >&2; exit 2 ;;
 esac

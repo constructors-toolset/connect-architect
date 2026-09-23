@@ -32,11 +32,17 @@ DB 경로: `ARCHAI_BOM_DB` 환경변수, 없으면 `./data/processed/bom/arch-bo
 | 조립체 정의 | `bom_assembly_add(code, name, unit, ["CON-24:0.2:0.02", ...])` | `assembly-add ...` |
 | 매핑 규칙 | `bom_map_add(ifc_class, pattern, assembly, qty_field)` | `map-add ...` |
 | 물량 → BOM·재료비 | `ifc_takeoff` → `bom_cost(takeoff_csv)` | `cost takeoff.csv` |
+| **조달청 가격 검색** | `price_search("레디믹스트", category="bildng", spec="25-24-150")` | `archai price search 레디믹스트 --spec 25-24-150` |
+| **조달청 가격 → BOM 단가 등록** | `price_link_to_bom("CON-24", "레디믹스트", spec="25-24-150")` | `archai price link CON-24 --name 레디믹스트 --spec 25-24-150` |
+
+조달청 가격정보(공공데이터포털, 무료)는 환경변수 `DATA_GO_KR_KEY`가 필요하다. 분류(`price_categories`):
+시설공통자재(건축 `bildng`·토목·기계·전기·종합 `total`), 시장시공가격(건축 `mrkt_bildng` 등), 표준시장단가(`std`), 공종분류(`cnstty`), 자원분류(`rsce`).
+`price_link_to_bom`은 **단위가 다르면 등록하지 않는다** — 환산(예: kg→ton)한 값을 `bom_price_add`로 넣고 출처에 원자료와 환산식을 적는다.
 
 ## 데이터 수집 원칙 (중요)
 
 - **단가를 만들어내지 않는다.** 단가는 반드시 출처(source)와 기준일(price_date)이 있는 값만 넣는다.
-  수집 출처 예: 조달청 가격정보(나라장터 가격정보), 표준시장단가·표준품셈(국토교통부 고시), 물가정보지(물가자료·거래가격), 견적서.
+  무료 출처: **조달청 가격정보 API(우선 사용)**, 표준시장단가(같은 API의 `std`), 견적서. 표준품셈은 PDF만 있어 수작업 입력. 시중 물가정보지는 유료라 사용하지 않는다.
   출처를 확인할 수 없는 값은 넣지 말고 "단가 없음"으로 남긴다.
 - 원본 수집 파일은 `data/raw/`(수정 금지), 정제한 CSV는 `data/processed/bom/`, AI가 만든 매핑·조립체 초안은 `data/generated/bom/`(+`.meta.md`).
 - 소요량(단위당 수량)과 할증률은 표준품셈 등 근거를 note에 남긴다. 근거 없는 가정값이면 "가정"으로 표시한다.

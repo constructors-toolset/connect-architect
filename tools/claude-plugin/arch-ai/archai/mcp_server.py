@@ -2,7 +2,8 @@
 
 실행: python -m archai.mcp_server
 필요 패키지: mcp, ezdxf, ifcopenshell  (requirements.txt)
-환경변수: LAW_OC(법령 API), ARCHAI_BOM_DB(BOM DB 경로, 선택)
+환경변수: LAW_OC(법령 API), KCSC_API_KEY(국가건설기준), DATA_GO_KR_KEY(조달청 가격정보),
+          ARCHAI_BOM_DB(BOM DB 경로, 선택)
 """
 
 from __future__ import annotations
@@ -12,13 +13,14 @@ try:  # mcp 2.x
 except ImportError:  # mcp 1.x
     from mcp.server.fastmcp import FastMCP as _Server
 
-from . import bom, law, spec, structure
+from . import bom, kcsc, law, price, spec, structure
 
 server = _Server(
     "arch-ai",
     instructions=(
         "건축 전문 도구: 법령 검색(law_*), DXF 도면 해석·작도(dxf_*), IFC/BIM 조회·검증·수정(ifc_*), "
-        "구조 검토 계산(struct_*), BOM DB·물량·비용(bom_*), 시방서(spec_*). "
+        "구조 검토 계산(struct_*), BOM DB·물량·비용(bom_*), 시방서(spec_*), "
+        "KDS/KCS 기준 원문(kcsc_*), 조달청 가격정보(price_*). "
         "계산·법령 결과는 근거(조문/기준)와 함께 보고하고, 최종 판단은 전문가 검토 대상임을 밝힌다."
     ),
 )
@@ -181,6 +183,52 @@ def spec_skeleton(title: str, kcs: str = "KCS 00 00 00") -> str:
 def spec_check(spec_path: str) -> dict:
     """시방서 교차검토: BOM 코드 존재 여부, KS/KCS 참조, 필수 절 누락, 미작성 표시"""
     return spec.check(spec_path)
+
+
+# ---------------------------------------------------------------- 국가건설기준 (KDS/KCS)
+@server.tool()
+def kcsc_search(keyword: str, code_type: str | None = None) -> list[dict]:
+    """KDS 설계기준·KCS 표준시방서·기관별 전문시방서(LHCS, SMCS 등) 기준명 검색. code_type 예: KCS"""
+    return kcsc.search(keyword, code_type)
+
+
+@server.tool()
+def kcsc_get(code: str, code_type: str | None = None, clause: str | None = None) -> dict:
+    """기준 본문(Markdown). code 예: 'KCS 41 40 06' 또는 '414006'. clause='3.2'면 해당 조항과 하위만.
+    인용 시 결과의 cite(코드·버전)와 조항번호를 함께 적는다. 원문을 파일로 저장하지 않는다."""
+    return kcsc.get(code_type, code, clause)
+
+
+@server.tool()
+def kcsc_toc(code: str, code_type: str | None = None) -> dict:
+    """기준의 조항 목차"""
+    return kcsc.toc(code_type, code)
+
+
+@server.tool()
+def kcsc_grep(code: str, pattern: str, code_type: str | None = None) -> dict:
+    """기준 본문에서 문자열 검색(조항·문맥 반환). 예: pattern='담수시험'"""
+    return kcsc.grep(code_type, code, pattern)
+
+
+# ---------------------------------------------------------------- 조달청 가격정보
+@server.tool()
+def price_categories() -> dict:
+    """조달청 가격정보 분류 코드 목록"""
+    return {k: v[1] for k, v in price.CATEGORIES.items()}
+
+
+@server.tool()
+def price_search(keyword: str, category: str = "bildng", spec: str | None = None) -> list[dict]:
+    """조달청 가격정보 검색(품명+규격). category: bildng(건축자재)|total|mrkt_bildng(시장시공가격)|std(표준시장단가)|..."""
+    return price.search(keyword, category, spec)
+
+
+@server.tool()
+def price_link_to_bom(item_code: str, name: str, spec: str | None = None, category: str = "bildng",
+                      index: int = 0, force: bool = False) -> dict:
+    """조달청 가격 검색 결과(index번째)를 BOM 품목 단가로 출처와 함께 등록. 단위가 다르면 등록하지 않음"""
+    return price.link_to_bom(item_code, category, name, spec, index, force)
 
 
 def main():

@@ -16,7 +16,24 @@ description: BIM 모델(IFC 2x3/IFC4)을 읽고 구조(프로젝트-대지-건�
 | 물량 집계 → CSV | `ifc_takeoff(path, out_csv)` | `takeoff model.ifc out.csv` |
 | 속성 수정 (새 파일로 저장) | `ifc_set_property(path, guid, pset, prop, value, out)` | `set-prop ...` |
 
-도구로 안 되는 작업(형상 편집, 요소 생성·삭제, 공간 관계 수정)은 ifcopenshell API로 스크립트를 쓴다:
+### IfcOpenShell 공식 MCP (`ifc-openshell` 서버) — 함께 설치됨
+
+모델을 메모리에 올려 두고 여러 번 조회·편집할 때, 그리고 아래 기능이 필요할 때 쓴다.
+| 기능 | 도구 |
+|---|---|
+| 로드/저장/신규 | `ifc_load(path)`, `ifc_save`, `ifc_new` |
+| 구조·관계 탐색 | `ifc_tree`, `ifc_select`(선택자 쿼리), `ifc_relations`, `ifc_info` |
+| **간섭검토** | `ifc_clash` |
+| 스키마 검증 | `ifc_validate` (공식 서버 쪽 — 스키마·규칙 검증) |
+| 편집 (ifcopenshell.api) | `ifc_docs`로 API 확인 → `ifc_edit` |
+| 수량 계산 | `ifc_quantify` (Qto 없는 모델에 수량 생성) |
+| 형상·도면 | `ifc_shape`, `ifc_plot`(2D 도면), `ifc_render` |
+| 공정·비용 | `ifc_schedule`, `ifc_cost` |
+
+두 서버에 같은 이름의 도구가 있다(`ifc_summary`, `ifc_validate`). **arch-ai 쪽은 파일 경로를 받아 한 번에 답하고(BIM 품질 체크리스트·BOM 연계용 takeoff), ifc-openshell 쪽은 `ifc_load` 후 세션으로 작업한다.**
+Qto가 없는 모델은 `ifc_quantify` → `ifc_save`로 수량을 채운 새 파일을 만든 뒤 arch-ai `ifc_takeoff`로 BOM에 넘긴다.
+
+그래도 안 되는 작업은 ifcopenshell API로 스크립트를 쓴다:
 ```python
 import ifcopenshell, ifcopenshell.api as api
 m = ifcopenshell.open("in.ifc")

@@ -13,4 +13,4 @@
 
 | 경로 | 설명 | 작성 | 추가일 |
 |---|---|---|---|
-| `claude-plugin/arch-ai/` | 건축 전문 스킬 8종 + arch-ai MCP 서버(도구 23개): 법령·도면·BIM·구조·BOM·시방서 — [README](claude-plugin/arch-ai/README.md) | ai | 2026-09-23 |
+| `claude-plugin/arch-ai/` | 건축 전문 스킬 8종 + MCP 서버 3개(arch-ai 도구 30개, IfcOpenShell 공식, 한국 법령): 법령·도면·BIM·구조·BOM·시방서·KDS/KCS·조달청 가격 — [README](claude-plugin/arch-ai/README.md) | ai | 2026-09-23 |

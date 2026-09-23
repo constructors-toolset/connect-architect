@@ -50,8 +50,14 @@ description: 건축 전문가 집단(건축사·구조기술사·BIM 코디네�
 
 ## 도구
 
-MCP 서버 `arch-ai`의 도구(`law_*`, `dxf_*`, `ifc_*`, `struct_*`, `bom_*`, `spec_*`)를 우선 쓴다.
-MCP가 없으면 CLI: `"${CLAUDE_PLUGIN_ROOT}/bin/archai" <law|dxf|ifc|structure|bom|spec> ...`
+MCP 서버 3개를 쓴다.
+- `arch-ai`: `law_*`, `dxf_*`, `ifc_*`, `struct_*`, `bom_*`, `spec_*`, `kcsc_*`(KDS/KCS 원문), `price_*`(조달청 가격)
+- `ifc-openshell`: IfcOpenShell 공식 MCP (간섭검토, 편집, 수량 계산, 도면·렌더)
+- `korean-law`: 법령·별표·조례·판례·해석례 심층 조사
+- (선택) `docling`: 도면·시방서 PDF의 표·레이아웃 추출 — 설치 안내 `docs/guides/arch-ai-plugin.md`
+
+필요한 API 키: `LAW_OC`, `KCSC_API_KEY`, `DATA_GO_KR_KEY`. 키가 없는 도구는 오류 메시지로 안내하므로, 사용자에게 발급을 요청한다.
+MCP가 없으면 CLI: `"${CLAUDE_PLUGIN_ROOT}/bin/archai" <law|dxf|ifc|structure|bom|spec|kcsc|price> ...`
 (허브 저장소 안에서는 `tools/claude-plugin/arch-ai/bin/archai`).
 
 ## 산출물 저장
